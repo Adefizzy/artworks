@@ -1,0 +1,169 @@
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#55a01c" />
+    <meta name="msapplication-navbutton-color" content="#55a01c" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#55a01c" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>ArtWorks</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light">
+      <div class="d-flex justify-content-between container">
+        <a class="navbar-brand" href="#">ArtWorks</a>
+        <ul id="user" class="nav">
+          <li class="nav-item d-flex align-items-center">
+            <span style="color: #fff; font-size:12px;">Adefisayo</span>
+            <a class="nav-link" href="#">
+              <i class="fa fa-user-circle"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <aside id="sideBar" class="container pt-5">
+      <div class="row mt-3 row-div">
+        <div class=" d-flex justify-content-between flex-column">
+          <div>
+            <div class="col-12 mt-2">
+              <a href="#" class="">
+                <i class="fa fa-heart pr-2" aria-hidden="true"></i>
+                favourites
+              </a>
+            </div>
+            <div class="col-12 mt-3">
+              <a href="#" class="">
+                <i class="fa fa-book pr-2" aria-hidden="true"></i>
+                View Posts
+              </a>
+            </div>
+            <div class="col-12 mt-3">
+              <a href="#" class="">
+                <i class="fa fa-pencil-square-o pr-2" aria-hidden="true"></i>
+                Post Ad
+              </a>
+            </div>
+            <div class="col-12 mt-3">
+              <a href="#" class="">
+                <i class="fa fa-adjust pr-2" aria-hidden="true"></i>
+                Edit Post
+              </a>
+            </div>
+            <div class="col-12 mt-3">
+              <a href="#" class="">
+                <i class="fa fa-cog pr-2" aria-hidden="true"></i>
+                Setting
+              </a>
+            </div>
+          </div>
+          <div>
+            <div class="col-12 mb-4">
+              <a href="#" class="">
+                <i class="fa fa-sign-out pr-2" aria-hidden="true"></i>
+                sign out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="container" id="postAd">
+      <main class="row mt-3">
+        <form
+        action=""
+        method="post"
+        class="col-sm-12 col-md-8 col-lg-6 mx-auto"
+        id="ad-form"
+        >
+          <h4 class="text-center text-muted">POST ART WORKS</h4>
+          <div class="alert alert-primary" role="alert">
+          </div>
+          <div class="form-group" id="file-title">
+            <label for="title">Art Title</label>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              id="title"
+              aria-describedby="helpId"
+              placeholder=""
+              required
+            />
+          </div>
+          <div class="form-group" id="file-price">
+            <label for="price">Art Price</label>
+            <input
+              type="text"
+              class="form-control"
+              name="price"
+              id="price"
+              aria-describedby="helpId"
+              placeholder=""
+              required
+            />
+            <small id="warning" class="form-text"
+              ></small
+            >
+          </div>
+          <div class="form-group" id="image-file">
+            <label for="image" id="image-label">
+              <span>
+                <i class="fa fa-upload" aria-hidden="true"></i>
+              </span>
+              <span>select photo(s)</span>
+            </label>
+            <input
+              type="file"
+              class="form-control-file"
+              name=""
+              id="image"
+              placeholder=""
+              aria-describedby="fileHelpId"
+              multiple
+              required
+            />
+            <small id="fileHelpId" class="form-text text-muted"
+              >You can select up to 3 photos</small
+            >
+          </div>
+          <div class="form-group" id="file-description">
+            <label for="description">Art Description</label>
+            <textarea
+              class="form-control"
+              name="description"
+              id="description"
+              rows="3"
+              maxlength="250"
+              required
+            ></textarea>
+            <small id="fileHelpId" class="form-text text-muted">
+              Write about the art work, 250 maximum character
+            </small>
+          </div>
+          <div class="form-row">
+            <div class="col-6 col-md-4 mr-auto">
+              <button id="" type="submit" class="button btn btn-primary w-100">
+                Post Ad
+              </button>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+    <footer class="bg-dark">
+      <h1>Hello word</h1>
+    </footer>
+
+    <script src="/sideBar.js"></script>
+    <script src="/upload.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+  </body>
+</html>
