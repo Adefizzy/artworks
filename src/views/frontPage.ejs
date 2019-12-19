@@ -14,10 +14,10 @@
   <body>
     <nav class="navbar navbar-light">
       <div class="d-flex justify-content-between container">
-        <a class="navbar-brand" href="#">ArtWorks</a>
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
         <ul id="user" class="nav">
           <li class="nav-item d-flex align-items-center">
-            <span style="color: #fff; font-size:12px;">Adefisayo</span>
+            <span><%=username%></span>
             <a class="nav-link" href="#">
               <i class="fa fa-user-circle"></i>
             </a>
@@ -30,29 +30,29 @@
         <div class=" d-flex justify-content-between flex-column">
           <div>
             <div class="col-12 mt-2">
-                <a href="#" class="">
+                <a href="/auth/favourites" class="">
                   <i class="fa fa-heart pr-2" aria-hidden="true" ></i>
                   favourites
                 </a>
             </div>
             <div class="col-12 mt-3">
-              <a href="#" class=""  >
+              <a href="/auth/posts" class=""  >
                 <i class="fa fa-book pr-2" aria-hidden="true" ></i>
                 View Posts
               </a>
             </div>
             <div class="col-12 mt-3">
-              <a href="#" class=""  >
+              <a href="/auth/postad" class=""  >
                 <i class="fa fa-pencil-square-o pr-2" aria-hidden="true" ></i>
                 Post Ad
               </a>
             </div>
-            <div class="col-12 mt-3">
+            <!-- <div class="col-12 mt-3">
               <a href="#" class=""  >
                 <i class="fa fa-adjust pr-2" aria-hidden="true" ></i>
                 Edit Post
               </a>
-            </div>
+            </div> -->
             <div class="col-12 mt-3">
                 <a href="#" class=""  >
                   <i class="fa fa-cog pr-2" aria-hidden="true" ></i>
@@ -62,7 +62,7 @@
           </div>
           <div>
               <div class="col-12 mb-4">
-                  <a href="#" class=""  >
+                  <a href="/logout" class=""  >
                     <i class="fa fa-sign-out pr-2" aria-hidden="true"></i>
                     sign out
                   </a>
@@ -118,109 +118,25 @@
       </div>
       <div  class=" d-flex flex-column justify-content-between h-100 mt-3">
         <main class="art-container ">
-          <section class="art-card ">
+         <%posts.forEach(post => {%>
+            <section class="art-card ">
             <header class="art-header" id="img1">
-              <img
-                src="images/abstract-background-dark-247671.jpg"
+              <a href="/auth/artpreview/<%=post._id%>"><img
+                src=<%=post.image%>
                 class="art-image"
-                alt=""
-              />
+                alt=<%=post.title%>
+              /></a>
             </header>
             <footer class="art-footer">
-              <p class="art-name">Dan Vin Ci</p>
-              <p class="art-artist text-muted">Akindele Femi</p>
+              <p class="art-name"><%=post.title%></p>
+              <p class="art-artist text-muted"><%=post.artist%></p>
               <p class=" d-flex justify-content-between pr-3">
-                  <span class="text-primary">$599.00 </span>
+                  <span class="text-primary"><%=post.price%></span>
                   <a href="#"><i  class=" icon fa fa-heart-o" ></i></a>
               </p>
             </footer>
           </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/background-close-up-color-1227648.jpg"
-                class="art-image"
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-              <p class=" d-flex justify-content-between pr-3">
-                  <span class="text-primary">$599.00 </span>
-                  <i class="icon fa fa-heart-o" ></i>
-              </p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image"
-                alt=" "
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-              <p class=" d-flex justify-content-between pr-3">
-                  <span class="text-primary">$599.00 </span>
-                  <i class="icon fa fa-heart-o" ></i>
-              </p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image"
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-              <p class=" d-flex justify-content-between pr-3">
-                  <span class="text-primary">$599.00 </span>
-                  <i class="icon fa fa-heart-o" ></i>
-              </p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image"
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-              <p class=" d-flex justify-content-between pr-3">
-                  <span class="text-primary">$599.00 </span>
-                  <i class="icon fa fa-heart-o" ></i>
-              </p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image "
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-              <p class=" d-flex justify-content-between pr-3">
-                <span class="text-primary">$599.00 </span>
-                <i class="icon fa fa-heart-o" ></i>
-              </p>
-              
-            </footer>
-          </section>
+         <%})%>
         </main>
         <footer class="row bg-dark">
           <h1>Hello word</h1>

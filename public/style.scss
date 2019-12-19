@@ -2,6 +2,10 @@ $primary-color: #55a01c;
 $secondary-color: #fff;
 $text-color: rgb(58, 58, 58);
 
+.redBorder{
+  border-color: red;
+}
+
 @mixin animation($animation-name) {
   animation-name: $animation-name;
   animation-fill-mode: forwards;
@@ -23,35 +27,24 @@ $text-color: rgb(58, 58, 58);
   color: $text-color;
 }
 
-nav {
-  z-index: 900;
+
+.navbar{
   background-color: $primary-color;
-  div {
-    a {
-      color: $secondary-color !important;
-    }
-    ul {
-      li {
-        span {
-          color: $secondary-color;
-          font-size: 14px;
-        }
-        a {
-          i {
-            color: $secondary-color;
-            font-size: 24px;
-          }
-        }
-      }
-    }
+  z-index: 900;
+  .navbar-brand, .nav-item a{
+    font-size: 16px;
+    color: $secondary-color;
   }
-  // a {
-  //   color: $secondary-color !important;
-  //   i {
-  //     color: $secondary-color;
-  //     font-size: 24px !important;
-  //   }
-  // }
+
+  .nav-item a{
+    padding-right: 0;
+  }
+  .nav-item span, .nav-link i{
+    color: $secondary-color;
+  }
+  .nav-item span{
+    font-size: 14px;
+  }
 }
 
 input-focus {
@@ -73,21 +66,32 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 100%;
 
   .art-card {
-    flex-basis: 46%;
-    margin: 0 2% 10px 2%;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column nowrap;
+    flex-basis: 47%;
+    margin: 0 auto;
+    // padding: 2px;
+    // margin: 0 2% 10px 2%;
     @include box-shadow(5px, 5px, 5px, 0, rgba(226, 226, 226, 0.5));
+    height: 40vh;
+    // border: 1px solid rgba(226, 226, 226, 0.815);
     .art-header {
       width: 100%;
-
+      height: 70%;
+      overflow: hidden;
       .art-image {
         width: 100%;
         height: auto;
+        margin: 0 auto;
         object-fit: contain;
       }
     }
     .art-footer {
       padding-left: 5px;
-      padding-bottom: 5px;
+      // padding-bottom: 2px;
+      padding-top: 5px;
+      height: 30%;
       p {
         margin: 0;
         font-size: 0.7em;
@@ -137,6 +141,16 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
+#art-preview{
+  #art-preview-image{
+    img{
+      width: 100%;
+      max-height:50vh;
+      object-fit: contain;
+    }
+  }
+}
+
 #signin-form {
   @include box-shadow(5px, 5px, 5px, 0px, rgba(226, 226, 226, 0.5));
   input {
@@ -148,6 +162,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #signup-form {
+  #alert {
+    display: none;
+  }
+ 
   input {
     border-width: 1px;
     &:focus {
@@ -228,12 +246,13 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .button {
-  background-color: $primary-color;
+  background-color: $primary-color !important;
   border: none;
   color: $secondary-color !important;
   @include box-shadow(0px, 5px, 5px, 0, rgba(9, 87, 9, 0.452));
   &:hover {
-    @include box-shadow(0, 0, 0, 0, transparent);
+    @include box-shadow(0px, 0px, 0px, 0px, transparent);
+    background-color: $primary-color;
   }
 }
 
@@ -273,11 +292,11 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-#ad-form {
+.ad-form {
   .alert {
     display: none;
   }
-  #image-file {
+  .image-file {
     input {
       width: 0.1px;
       height: 0.1px;
@@ -303,14 +322,14 @@ input[type="number"]::-webkit-outer-spin-button {
       }
     }
   }
-  #file-description textarea:focus,
-  #file-title input:focus,
-  #file-price input:focus {
+  .file-description textarea:focus,
+  .file-title input:focus,
+  .file-price input:focus {
     @extend input-focus;
   }
-  #file-description textarea,
-  #file-title input,
-  #file-price input {
+  .file-description textarea,
+  .file-title input,
+  .file-price input {
     border: 3px solid rgb(214, 214, 214);
   }
 }
@@ -387,12 +406,20 @@ i {
 // ***********MEDIA QUERIES********************************************************************************
 
 @media (min-width: 768px) {
+  .navbar{
+    .navbar-brand{
+      font-size: 24px;
+    }
+    .nav-item span{
+      font-size: 18px;
+    }
+  }
   .art-container {
     justify-content: start;
     .art-card {
       flex-basis: 30%;
       margin: 0 1.5% 10px 1.5%;
-
+      height: 50vh;
       .art-footer {
         p {
           font-size: 0.9em;
@@ -448,12 +475,26 @@ i {
       transform: translate(200px);
     }
   }
+  #art-preview{
+    #art-preview-image{
+      img{
+        width: 100%;
+        max-height:65vh;
+        object-fit: contain;
+      }
+    }
+  }
 }
 
 @media (min-width: 992px) {
   .art-container {
     .art-card {
       flex-basis: 22%;
+
+      .art-footer{
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
     }
   }
 

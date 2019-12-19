@@ -1,74 +1,49 @@
-import express from "express";
-import debug from "debug";
-import chalk from "chalk";
-import morgan from "morgan";
-import session from "express-session";
-import cookieParser from "cookie-parser";
-import path from "path";
+import express from 'express';
+import debug from 'debug';
+import chalk from 'chalk';
+import morgan from 'morgan';
+import dotenv from 'dotenv';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import passport from 'passport';
+import methodOverride from 'method-override';
+import { Strategy } from 'passport-local';
+import flash from 'connect-flash';
+
+import home from './routes/home';
+import authRoutes from './routes/authRoutes';
+
+import users from './model/users';
+import postModel from './model/posts';
+
+import database from './config/database';
+import authenticateUser from './config/passport';
+
+database();
+
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
-app.use(morgan("dev"));
-app.use(express.static("public"));
-app.set("views", "./src/views");
-app.set("view engine", "ejs");
-app.get("/", (req, res) => {
-  res.render("index");
-});
-app.get("/art", (req, res) => {
-  res.render("artPreview");
-});
 
-app.get("/front", (req, res) => {
-  res.render("frontPage");
-});
+const { PORT } = process.env;
 
-app.get("/signin", (req, res) => {
-  res.render("signIn");
-});
-app.get("/signup", (req, res) => {
-  res.render("signUp");
-});
-app.get("/favourite", (req, res) => {
-  res.render("favourite");
-});
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(session({ secret: 'artworks', resave: false, saveUninitialized: false }));
+app.use(methodOverride('_method'));
+app.use(flash());
 
-app.get("/post", (req, res) => {
-  res.render("postArt");
-});
+authenticateUser(app, users, passport, Strategy);
 
-app.get("/edit", (req, res) => {
-  res.render("editPost");
-});
+app.use(express.static('public'));
+app.set('views', './src/views');
+app.set('view engine', 'ejs');
 
-app.get("/message", (req, res) => {
-  res.render("message");
-});
+app.use('/', home(passport, users, postModel));
+app.use('/auth/', authRoutes(users, postModel));
 
-app.get("/inbox", (req, res) => {
-  res.render("inbox", {
-    read: true,
-    messages: [
-      {
-        art: "Da vi ci",
-        price: "$500.00",
-        date: "10/10/2019",
-        name: "Kolade Anifowoshe"
-      },
-      {
-        art: "Forest Live",
-        price: "$10,00.00",
-        date: "19 hours ago",
-        name: "Adeniji Adefisayo"
-      },
-      {
-        art: "Running Water",
-        price: "$5,00.00",
-        date: "10 mins ago",
-        name: "Dayo Ariyo"
-      }
-    ]
-  });
-});
-
-app.listen(PORT, debug("app:")(chalk.red(`Server running on port ${PORT}`)));
+app.listen(PORT, debug('app:')(chalk.red(`Server running on port ${PORT}`)));

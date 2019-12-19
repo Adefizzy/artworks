@@ -1,12 +1,15 @@
 <html lang="en">
   <head>
-      <meta name="theme-color" content="#55a01c"/>
-      <meta name="msapplication-navbutton-color" content="#55a01c"/>
-      <meta name="apple-mobile-web-app-status-bar-style" content="#55a01c"/>
+    <meta name="theme-color" content="#55a01c" />
+    <meta name="msapplication-navbutton-color" content="#55a01c" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#55a01c" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/style.css" />
     <title>ArtWorks</title>
@@ -14,7 +17,7 @@
   <body>
     <nav class="navbar navbar-light">
       <div class="d-flex justify-content-between container">
-        <a class="navbar-brand" href="#">ArtWorks</a>
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
         <ul id="user" class="nav">
           <li class="nav-item d-flex align-items-center">
             <span>Adefisayo</span>
@@ -30,29 +33,29 @@
         <div class=" d-flex justify-content-between flex-column">
           <div>
             <div class="col-12 mt-2">
-              <a href="#" class="">
+              <a href="/auth/favourites" class="">
                 <i class="fa fa-heart pr-2" aria-hidden="true"></i>
                 favourites
               </a>
             </div>
             <div class="col-12 mt-3">
-              <a href="#" class="">
+              <a href="/auth/posts" class="">
                 <i class="fa fa-book pr-2" aria-hidden="true"></i>
                 View Posts
               </a>
             </div>
             <div class="col-12 mt-3">
-              <a href="#" class="">
+              <a href="/auth/postad" class="">
                 <i class="fa fa-pencil-square-o pr-2" aria-hidden="true"></i>
                 Post Ad
               </a>
             </div>
-            <div class="col-12 mt-3">
+            <!-- <div class="col-12 mt-3">
               <a href="#" class="">
                 <i class="fa fa-adjust pr-2" aria-hidden="true"></i>
                 Edit Post
               </a>
-            </div>
+            </div> -->
             <div class="col-12 mt-3">
               <a href="#" class="">
                 <i class="fa fa-cog pr-2" aria-hidden="true"></i>
@@ -62,7 +65,7 @@
           </div>
           <div>
             <div class="col-12 mb-4">
-              <a href="#" class="">
+              <a href="/logout" class="">
                 <i class="fa fa-sign-out pr-2" aria-hidden="true"></i>
                 sign out
               </a>
@@ -71,113 +74,102 @@
         </div>
       </div>
     </aside>
-    <div id="art-preview" class="container">
-      <div class="row mt-3 mx-auto mb-5">
-        <div class="col-sm-12 text-center mb-2">
-          <h4 class=" display-6 ">Dan Vin Ci <small>By</small> Akindele Femi</h3>
-          <h1 class="display-5"> $500.00</h1>  
-        </div>
-        <div  class="col-sm-12 col-md-6 col-lg-5">
-            <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <div   class="carousel-inner ">
-              <div class="carousel-item active">
-                <img
-                  src="/images/bloom-blooming-cafe-768943.jpg"
-                  class="d-block w-100"
-                  alt="..."
-                  
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="/images/background-close-up-color-1227648.jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="/images/abstract-background-dark-247671.jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-            </div>
-            <a
-              class="carousel-control-prev"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a
-              class="carousel-control-next"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Next</span>
-            </a>
+    <div class="container" id="postAd">
+      <main class="row mt-3">
+        <form
+        action="/auth/editpost/<%=post._id%>?_method=PUT"
+        method='POST'
+        class="col-sm-12 col-md-8 col-lg-6 mx-auto ad-form"
+        id=""
+        enctype="multipart/form-data"
+        >
+          <h4 class="text-center text-muted">EDIT ART WORK</h4>
+          <div class="alert alert-primary" role="alert">
           </div>
-        </div>
-        
-        <div class=" col-sm-12 col-md-6 ">
-          
-          <section class="row mt-3">
-            <article class="col" id="art-details">
-              <details open>
-                  <summary class=" mb-2 " >Artist Contact</summary>
-                  <div class=" row ">
-                    <div class="col-12">
-                      <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-facebook" aria-hidden="true" style="font-size:16px; color:#55a01c;"></i>
-                              </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class=" fa fa-twitter " aria-hidden="true" style="font-size:16px; color:#55a01c;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-whatsapp" aria-hidden="true" style="font-size:16px; color:#55a01c;"></i>
-                              </a>
-                        </li>
-                      </ul>
-                      <p class=" pl-3"><i class="fa fa-phone" aria-hidden="true" style="font-size:16px; color:#55a01c;"></i> 08023456789</p>
-                    </div>
-                  </div>
-                  </details>
-              <details>
-              <summary class="mb-2">Description</summary>
-              <p>
-                      The instrument for data collection adopted for the study is
-                      questionnaire. A structured questionnaire titled: Adaptive
-                      Equipment Technology for Supporting Persons with Disabilities
-              </p>
-              </details>
-            </article>
-          </section>
-          <button id="" class=" button btn btn-primary w-100 mx-auto mt-2">Edit</button>
-        </div>
-      </div>
+          <% if (error !== undefined ) {%>
+            <div class="alert alert-danger col-8 mx-auto" role="alert">
+             <p><%=error%></p>
+            </div>
+          <%}%>
+          <div class="form-group file-title" id="">
+            <label for="title">Art Title</label>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              id="title"
+              value="<%=post.title%>"
+              aria-describedby="helpId"
+              placeholder=""
+             
+            />
+          </div>
+          <div class="form-group file-price" id="">
+            <label for="price">Art Price</label>
+            <input
+              type="text"
+              class="form-control price"
+              name="price"
+              id="price"
+              value="<%=post.price%>"
+              aria-describedby="helpId"
+              placeholder=""
+              
+            />
+            <small id="" class="form-text warning"
+              ></small
+            >
+          </div>
+          <div class="form-group image-file" id="">
+            <label for="image" class="image-label">
+              <span>
+                <i class="fa fa-upload" aria-hidden="true"></i>
+              </span>
+              <span>select photo(s)</span>
+            </label>
+            <input
+              type="file"
+              class="form-control-file image"
+              name="images"
+              id="edit-image"
+              placeholder=""
+              aria-describedby="fileHelpId"
+              multiple
+              accept="image/*"
+            />
+            <small id="fileHelpId" class="form-text text-muted"
+              >You can select up to 3 photos</small
+            >
+          </div>
+          <div class="form-group file-description" id="">
+            <label for="description">Art Description</label>
+            <textarea
+              class="form-control"
+              name="description"
+              id="description"
+              rows="3"
+              maxlength="250"
+            ><%=post.description%></textarea>
+            <small id="fileHelpId" class="form-text text-muted">
+              Write about the art work, 250 maximum character
+            </small>
+          </div>
+          <div class="form-row">
+            <div class="col-6 col-md-4 mr-auto">
+              <button id="" type="submit" class="button btn btn-primary w-100">
+                Post Ad
+              </button>
+            </div>
+          </div>
+        </form>
+      </main>
     </div>
+    <footer class="bg-dark">
+      <h1>Hello word</h1>
+    </footer>
+
     <script src="/sideBar.js"></script>
+    <script src="/upload.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="/js/bootstrap.js"></script>
   </body>

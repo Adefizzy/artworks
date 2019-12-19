@@ -17,10 +17,10 @@
   <body>
     <nav class="navbar navbar-light">
       <div class="d-flex justify-content-between container">
-        <a class="navbar-brand" href="#">ArtWorks</a>
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
         <ul id="user" class="nav">
           <li class="nav-item d-flex align-items-center">
-            <span style="color: #fff; font-size:12px;">Adefisayo</span>
+            <span>Adefisayo</span>
             <a class="nav-link" href="#">
               <i class="fa fa-user-circle"></i>
             </a>
@@ -33,29 +33,29 @@
         <div class=" d-flex justify-content-between flex-column">
           <div>
             <div class="col-12 mt-2">
-              <a href="#" class="">
+              <a href="/auth/favourites" class="">
                 <i class="fa fa-heart pr-2" aria-hidden="true"></i>
                 favourites
               </a>
             </div>
             <div class="col-12 mt-3">
-              <a href="#" class="">
+              <a href="/auth/posts" class="">
                 <i class="fa fa-book pr-2" aria-hidden="true"></i>
                 View Posts
               </a>
             </div>
             <div class="col-12 mt-3">
-              <a href="#" class="">
+              <a href="/auth/postad" class="">
                 <i class="fa fa-pencil-square-o pr-2" aria-hidden="true"></i>
                 Post Ad
               </a>
             </div>
-            <div class="col-12 mt-3">
+            <!-- <div class="col-12 mt-3">
               <a href="#" class="">
                 <i class="fa fa-adjust pr-2" aria-hidden="true"></i>
                 Edit Post
               </a>
-            </div>
+            </div> -->
             <div class="col-12 mt-3">
               <a href="#" class="">
                 <i class="fa fa-cog pr-2" aria-hidden="true"></i>
@@ -65,7 +65,7 @@
           </div>
           <div>
             <div class="col-12 mb-4">
-              <a href="#" class="">
+              <a href="/logout" class="">
                 <i class="fa fa-sign-out pr-2" aria-hidden="true"></i>
                 sign out
               </a>
@@ -77,43 +77,47 @@
     <div class="container" id="postAd">
       <main class="row mt-3">
         <form
-        action=""
+        action="/auth/postad"
         method="post"
-        class="col-sm-12 col-md-8 col-lg-6 mx-auto"
-        id="ad-form"
+        class="col-sm-12 col-md-8 col-lg-6 mx-auto ad-form"
+        id="post-form"
+        enctype="multipart/form-data"
         >
           <h4 class="text-center text-muted">POST ART WORKS</h4>
           <div class="alert alert-primary" role="alert">
           </div>
-          <div class="form-group" id="file-title">
-            <label for="title">Art Title</label>
+          <% if (error !== undefined ) {%>
+            <div class="alert alert-danger col-8 mx-auto" role="alert">
+             <p><%=error%></p>
+            </div>
+          <%}%>
+          <div class="form-group file-title" id="">
+            <label for="post-title">Art Title</label>
             <input
               type="text"
               class="form-control"
-              name="title"
-              id="title"
+              name="post[title]"
+              id="post-title"
               aria-describedby="helpId"
               placeholder=""
               required
             />
           </div>
-          <div class="form-group" id="file-price">
+          <div class="form-group file-price" id="">
             <label for="price">Art Price</label>
             <input
               type="text"
-              class="form-control"
-              name="price"
-              id="price"
+              class="form-control price"
+              name="post[price]"
+              id="post-price"
               aria-describedby="helpId"
               placeholder=""
               required
             />
-            <small id="warning" class="form-text"
-              ></small
-            >
+            <small id="post-warning" class="form-text warning"></small>
           </div>
-          <div class="form-group" id="image-file">
-            <label for="image" id="image-label">
+          <div class="form-group image-file" id="">
+            <label for="post-image" class="image-label">
               <span>
                 <i class="fa fa-upload" aria-hidden="true"></i>
               </span>
@@ -121,24 +125,24 @@
             </label>
             <input
               type="file"
-              class="form-control-file"
-              name=""
-              id="image"
+              class="form-control-file image"
+              name="images"
+              id="post-image"
               placeholder=""
               aria-describedby="fileHelpId"
               multiple
-              required
+              accept="image/*"
             />
             <small id="fileHelpId" class="form-text text-muted"
               >You can select up to 3 photos</small
             >
           </div>
-          <div class="form-group" id="file-description">
+          <div class="form-group file-description" id="">
             <label for="description">Art Description</label>
             <textarea
-              class="form-control"
-              name="description"
-              id="description"
+              class="form-control desciption"
+              name="post[description]"
+              id="post-description"
               rows="3"
               maxlength="250"
               required

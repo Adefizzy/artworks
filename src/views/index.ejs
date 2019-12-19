@@ -17,13 +17,15 @@
     <title>ArtWorks</title>
   </head>
   <body>
-    <nav class="navbar navbar-light">
+    <nav class="navbar">
       <div class="d-flex justify-content-between container">
-        <a class="navbar-brand" href="#">ArtWorks</a>
+        <a class="navbar-brand" href="/">ArtWorks</a>
         <ul class="nav">
           <li class="nav-item">
-            
-            <a class="nav-link" href="#">Sign In</a>
+            <a class="nav-link" href="/signin" >log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/signup">Sign Up</a>
           </li>
         </ul>
       </div>
@@ -68,101 +70,29 @@
                   </div>
             </div>
             <div class=" col-sm-12 col-md-2" id="search-button-div">
-            <button id="button" type="submit" class="btn btn-primary closeSeachForm w-100">Search</button>
+            <button id="" type="submit" class=" button btn btn-primary closeSeachForm w-100">Search</button>
            </div>
           </div>
         </form>
       </div>
       <div  class=" d-flex flex-column justify-content-between h-100 mt-3">
         <main class="art-container ">
-          <section class="art-card ">
-            <header class="art-header" id="img1">
-              <a href="#"><img
-                src="images/abstract-background-dark-247671.jpg"
-                class="art-image"
-                alt=""
-              /></a>
-            </header>
-            <footer class="art-footer">
-              <p class="art-name">Dan Vin Ci</p>
-              <p class="art-artist text-muted">Akindele Femi</p>
-              <p class=" text-primary">$599.00</p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <a href=""><img
-                src="images/background-close-up-color-1227648.jpg"
-                class="art-image"
-                alt=""
-              /></a>
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-             <p class=" text-primary ">$500.00</p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image"
-                alt=" "
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-             <p class=" text-primary ">$500.00</p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image"
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-             <p class=" text-primary ">$500.00</p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image"
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-             <p class=" text-primary ">$500.00</p>
-            </footer>
-          </section>
-          <section class="art-card">
-            <header class="art-header" id="img1">
-              <img
-                src="images/color-design-flora-1166644.jpg"
-                class="art-image "
-                alt=""
-              />
-            </header>
-            <footer class="art-footer">
-              <p class="">Dan Vin Ci</p>
-              <p class="text-muted">Akindele Femi</p>
-              <p class=" d-flex justify-content-between pr-3">
-                <span class="text-primary">$599.00 </span>
-                <i class="icon fa fa-heart-o" ></i>
-              </p>
-              
-            </footer>
-          </section>
+          <%posts.forEach(post => {%>
+            <section class="art-card ">
+              <header class="art-header" id="img1">
+                <a href="/auth/artpreview/<%=post._id%>"><img
+                  src=<%=post.image%>
+                  class="art-image"
+                  alt=<%=post.title%>
+                /></a>
+              </header>
+              <footer class="art-footer">
+                <p class="art-name"><%=post.title%></p>
+                <p class="art-artist text-muted"><%=post.author%></p>
+                <p class=" text-primary">#<%=post.price%></p>
+              </footer>
+            </section>
+          <%})%>
         </main>
         <footer class="row bg-dark">
           <h1>Hello word</h1>
