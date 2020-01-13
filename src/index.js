@@ -10,9 +10,7 @@ import passport from 'passport';
 import methodOverride from 'method-override';
 import { Strategy } from 'passport-local';
 import flash from 'connect-flash';
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import config from '../webpack.config';
+
 
 import home from './routes/home';
 import authRoutes from './routes/authRoutes';
@@ -30,14 +28,8 @@ dotenv.config();
 
 const app = express();
 
-const compiler = webpack(config);
 
-app.use(webpackMiddleware(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath,
-}));
-
-const { PORT } = process.env;
+const { PORT } = process.env.PORT || 6868;
 
 
 app.use(cors());
