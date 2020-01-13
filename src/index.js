@@ -10,8 +10,8 @@ import passport from 'passport';
 import methodOverride from 'method-override';
 import { Strategy } from 'passport-local';
 import flash from 'connect-flash';
-import redis from 'redis';
-import connectRedis from 'connect-redis'
+import mongoose from 'mongoose';
+import connectMongo from 'connect-mongo';
 
 import home from './routes/home';
 import authRoutes from './routes/authRoutes';
@@ -32,8 +32,7 @@ const app = express();
 
 const PORT = process.env.PORT || 6868;
 
-const RedisStore = connectRedis(session);
-const redisClient = redis.createClient(6379, '123.45.678.901');
+const MongoStore = connectMongo(session);
 
 app.use(cors());
 app.use(express.json());
@@ -44,7 +43,9 @@ app.use(session({
   secret: 'artworks',
   resave: false,
   saveUninitialized: false,
-  store: new RedisStore({ client: redisClient }),
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+  }),
 }));
 
 app.use(methodOverride('_method'));
@@ -59,8 +60,6 @@ app.set('view engine', 'ejs');
 app.use('/', home(passport, users, postModel));
 app.use('/auth/', authRoutes(users, postModel, messageModel));
 
-redisClient.on('error', (err) => {
-  debug('app:')(err);
-});
+
 
 app.listen(PORT, debug('app:')(chalk.red(`Server running on port ${PORT}`)));
