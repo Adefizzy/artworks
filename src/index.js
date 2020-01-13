@@ -59,4 +59,8 @@ app.set('view engine', 'ejs');
 app.use('/', home(passport, users, postModel));
 app.use('/auth/', authRoutes(users, postModel, messageModel));
 
+redisClient.on('error', (err) => {
+  debug('app:')(err);
+});
+
 app.listen(PORT, debug('app:')(chalk.red(`Server running on port ${PORT}`)));
