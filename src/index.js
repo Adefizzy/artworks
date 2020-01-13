@@ -33,7 +33,7 @@ const app = express();
 const PORT = process.env.PORT || 6868;
 
 const RedisStore = connectRedis(session);
-const client = redis.createClient(); 
+const client = redis.createClient(6379, '123.45.678.901');
 
 app.use(cors());
 app.use(express.json());
