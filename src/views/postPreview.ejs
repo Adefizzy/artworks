@@ -12,9 +12,24 @@
     <title>ArtWorks</title>
   </head>
   <body>
+    <div class="modal fade" id="enlargePhoto" tabindex="-1" role="dialog" aria-labelledby="enlargePhotoTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <h5 class="modal-title" id="enlargePhotoTitle">Modal title</h5> -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body px-0">
+            <img>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="navbar navbar-light">
       <div class="d-flex justify-content-between container">
-        <a class="navbar-brand" href="#">ArtWorks</a>
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
         <ul id="user" class="nav">
           <li class="nav-item d-flex align-items-center">
             <span><%=username%></span>
@@ -72,95 +87,70 @@
       </div>
     </aside>
     <div id="art-preview" class="container">
-      <div class="row mt-3 mx-auto mb-5">
-        <div class="col-sm-12 text-center mb-2">
-          <h4 class=" display-6 "><%=post.title%><small>By</small><%=post.artist.name%></h3>
-          <h1 class="display-5"><%=post.price%></h1>  
+      <div class="row art-preview-header">
+        <div class="col-12 text-center my-3">
+          <h5 class=" "><%=post.title%> - <%=post.artist.name%></h5>
+          <h4 class=""> <%=post.price%></h4>  
         </div>
-        <div  class="col-sm-12 col-md-6 col-lg-5">
-            <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <div   class="carousel-inner ">
+      </div>
+      <div class="row art-preview-footer">
+        <div class="col-sm-12 col-md-12 col-lg-7 mb-3 p-0">
+          <div id="art-preview-carousel" class="carousel slide carousel-fade " data-ride="carousel">
+            <div id="art-preview-image" class="carousel-inner">
               <%post.images.forEach((image, index)=> {
                 if(index === 0){%>
-                  <div class="carousel-item active">
-                  <img src=<%=image%> class="d-block w-100" alt="...">
+                  <div class="carousel-item active px-2" data-interval="50000">
+                  <img data-carousel-image='<%=image%>' src='<%=image%>' class="d-block w-100" alt="<%=post.title%>">
                 </div>
                 <%}else{%>
-                  <div class="carousel-item">
-                  <img src=<%=image%> class="d-block w-100" alt="...">
+                  <div  class="carousel-item px-2" data-interval="50000">
+                  <img data-carousel-image='<%=image%>' src='<%=image%>' class="d-block w-100" alt="<%=post.title%>">
                 </div>
                 <%}})%>
             </div>
-            <a
-              class="carousel-control-prev"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Previous</span>
+            <a class="carousel-control-prev" href="#art-preview-carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only"  >Previous</span>
             </a>
-            <a
-              class="carousel-control-next"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
+            <a class="carousel-control-next" href="#art-preview-carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
           </div>
+          <div class=" ml-3">
+            <small data-toggle="modal" data-target="#enlargePhoto" id="enlargePhotoButton">Enlarge Photo</small>
+          </div>
         </div>
         
-        <div class=" col-sm-12 col-md-6 ">
-          
-          <section class="row mt-3">
-            <article class="col" id="art-details">
-              <details open>
-                  <summary class=" mb-2 " >Artist Contact</summary>
-                  <div class=" row ">
-                    <div class="col-12">
-                      <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-facebook" aria-hidden="true" style="font-size:16px; color:#55a01c;"></i>
-                              </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class=" fa fa-twitter " aria-hidden="true" style="font-size:16px; color:#55a01c;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-whatsapp" aria-hidden="true" style="font-size:16px; color:#55a01c;"></i>
-                              </a>
-                        </li>
-                      </ul>
-                      <p class=" pl-3"><i class="fa fa-phone" aria-hidden="true" style="font-size:16px; color:#55a01c;"></i> 08023456789</p>
-                    </div>
-                  </div>
-                  </details>
-              <details>
-              <summary class="mb-2">Description</summary>
+        <div class=" col-sm-12 col-md-12 col-lg-5 d-flex justify-content-around flex-column flex-nowrap">
+        <section class="row">
+          <article class="col-12" id="art-details">
+            <div class="row d-flex justify-content-between flex-row flex-nowrap">
+              <div class="col-6">
+                <h5><%=post.title%></h5>
+              </div>
+              <div class="col-6 text-right" >
+                <a href="<%=post.artist.facebook%>"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="<%=post.artist.whatsapp%>" style="margin-left: 20px;"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>         
+              </div>
+            </div>
+            <div>
               <p><%=post.description%></p>
-              </details>
-            </article>
-          </section>
-          <button id="" class=" button btn btn-primary w-100 mx-auto mt-2" onclick="window.location.href='/auth/editpost/<%=post._id%>'">Edit</button>
+            </div>
+          </article>
+        </section>
+        <div class="row d-flex justify-content-between flex-row flex-nowrap">
+          <div class="col-6">
+            <button id="" class="button btn  w-100" onclick="window.location.href='/auth/editpost/<%=post._id%>'">Edit Post</button>
+          </div>
+          <div class="col-6 text-right align-self-end pr-3">
+          <span><i class="fa fa-phone" aria-hidden="true"></i> <%=post.artist.phone%></span>
+          </div>
+        </div>
         </div>
       </div>
     </div>
+    <script src="/enlargePhoto.js"></script>
     <script src="/sideBar.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="/js/bootstrap.js"></script>

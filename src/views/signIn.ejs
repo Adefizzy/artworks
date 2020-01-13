@@ -14,7 +14,7 @@
   <body>
     <nav class="navbar navbar-light">
       <div class="d-flex justify-content-between container">
-        <a class="navbar-brand" href="/">ArtWorks</a>
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="/signup">Sign Up</a>
@@ -22,13 +22,11 @@
         </ul>
       </div>
     </nav>
+    <div class="page-container">
     <div class="container-fluid">
-      <div class="d-flex justify-content-between flex-column h-100">
-        <main
-          class="row border-secondary d-flex justify-content-center align-items-center h-100"
-        >
+        <main class="row">
           <form
-            class="mx-2 col-11 col-md-6 col-lg-4 mx-auto py-4"
+            class="col-11 col-md-6 col-lg-4 mx-auto"
             id="signin-form"
             action = "/signin"
             method="POST"
@@ -38,7 +36,7 @@
                 <h4>Sign In</h4>
                 <% if (message !== undefined ) {%>
                   <div class="alert alert-danger col-8 mx-auto" role="alert">
-                   <p><%=message%></p>
+                   <p class="mb-0"><%=message%></p>
                   </div>
                 <%}%>
               </div>
@@ -72,24 +70,27 @@
                 <button
                   id=""
                   type="submit"
-                  class="button btn btn-primary w-100"
+                  class="button btn w-50"
                 >
                   Sign in
                 </button>
               </div>
             </div>
-            <ul class="col-12 justify-content-between d-flex nav flex-nowrap">
+            <ul class="col-12 justify-content-between d-flex nav flex-nowrap pt-4">
               <li class="nav-item">
                 <a class="nav-link" href="/forgotpassword"><small>forgot password?</small></a>
               </li>
             </ul>
           </form>
         </main>
-        <footer class="row bg-dark h-10">
-          <div class="col-12"><h1>Helo World</h1></div>
-        </footer>
-      </div>
     </div>
+    <footer class="footer text-center">
+      <div class="footer-section">
+        <p>Artworks<sup>&copy;</sup> was created by Adeniji Adefisayo, 2020.</p>
+        <small>All right reserved</small>
+      </div>
+    </footer>
+  </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="/js/bootstrap.js"></script>
   </body>

@@ -21,16 +21,17 @@
       <div class="d-flex justify-content-between container">
         <a class="navbar-brand" href="/">ArtWorks</a>
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/signin" >log In</a>
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link p-0" href="/signin" >Log In</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">Sign Up</a>
+          <li class="nav-item sign-up">
+            <a class="nav-link p-0" href="/signup">Sign Up</a>
           </li>
         </ul>
       </div>
     </nav>
-    <div class="container-fluid">
+    <div class="page-container">
+    <div class="container">
       <div class="row">
         <div class="col-12 pl-4" id="filter">
           <p class=" pt-2">
@@ -70,7 +71,7 @@
                   </div>
             </div>
             <div class=" col-sm-12 col-md-2" id="search-button-div">
-            <button id="" type="submit" class=" button btn btn-primary closeSeachForm w-100">Search</button>
+            <button id="" type="submit" class=" button btn closeSeachForm w-100">Search</button>
            </div>
           </div>
         </form>
@@ -81,23 +82,33 @@
             <section class="art-card ">
               <header class="art-header" id="img1">
                 <a href="/auth/artpreview/<%=post._id%>"><img
-                  src=<%=post.image%>
+                  src="<%=post.image%>"
                   class="art-image"
-                  alt=<%=post.title%>
+                  alt="<%=post.title%>"
                 /></a>
               </header>
               <footer class="art-footer">
-                <p class="art-name"><%=post.title%></p>
+                <%if(post.title.length > 11){
+                  post.title = post.title.slice(0, 10);
+                  %>
+                <small class="art-name"><%=post.title%>. . .</small>
+                <%}else{%>
+                  <small class="art-name"><%=post.title%></small>
+                  <%}%>
                 <p class="art-artist text-muted"><%=post.author%></p>
                 <p class=" text-primary">#<%=post.price%></p>
               </footer>
             </section>
           <%})%>
         </main>
-        <footer class="row bg-dark">
-          <h1>Hello word</h1>
-        </footer>
       </div>
+      </div>
+      <footer class="footer text-center">
+      <div class="footer-section">
+        <p>Artworks<sup>&copy;</sup> was created by Adeniji Adefisayo, 2020.</p>
+        <small>All right reserved</small>
+      </div>
+    </footer>
     </div>
     <script src="/main.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

@@ -10,7 +10,7 @@ function home(passport, Users, PostModel) {
   Router.route('/').get(PostController.populatePage(Users, PostModel, 'index'));
 
   Router.route('/signin').get((req, res) => {
-    res.render('signin', {
+    res.render('login', {
       message: req.flash('error')[0],
     });
   })
@@ -28,7 +28,7 @@ function home(passport, Users, PostModel) {
 
   Router.route('/signup')
     .get((req, res) => {
-      res.render('signup', {
+      res.render('register', {
         message: req.flash('message')[0],
       });
     })

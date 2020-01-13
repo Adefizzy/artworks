@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+  <meta name="theme-color" content="#55a01c" />
+  <meta name="msapplication-navbutton-color" content="#55a01c" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#55a01c" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="d-flex justify-content-between flex-column h-100">
+    <nav class="navbar navbar-light">
+      <div class="d-flex justify-content-between container">
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/signin">Sign In</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <form class="my-5 col-sm-12 col-md-8 mx-auto col-lg-6 " id="signup-form" method="post" action="/signup">
+          <header class="row">
+            <div class="col-sm-12 text-center">
+              <h4>Sign Up</h4>
+            </div>
+            <div id="alert" class="alert alert-danger col-8 mx-auto" role="alert">
+            </div>
+            <%if (message !== undefined){%>
+              <div class="alert alert-danger col-8 mx-auto" role="alert">
+                <p><%=message%></p>
+              </div>
+            <%}%>
+          </header>
+          <footer class="p-1">
+            <div id="user-selector" class=" d-flex justify-content-around text-center mb-3 ">
+              <div id="art-lover" class="p-2">
+                <p>Art lover</p>
+              </div>
+              <div id="artist" class="p-2 box-shadow">
+                <p>Artist</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="inputName" name="name" placeholder="Name" maxlength="20" required />
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" name="phone" id="inputPhone" placeholder="phone number e.g 080xxxxxxxx" maxlength="13"
+                required />
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" name="username" id="inputEmail4" placeholder="Email" required />
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" id="inputPassword4" placeholder="Password" maxlength="20" required
+              />
+            </div>
+            <div id="more-details">
+              <div class="form-group">
+                <input type="text" class="form-control" id="address" name="address" placeholder="Address" />
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook profile link" />
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="whatsaap" name="whatsapp" placeholder="WhatsApp number" />
+              </div>
+            </div>
+            <button id="" type="submit" class="button btn  w-100">
+              Create Account
+            </button>
+          </footer>
+        </form>
+      </div>
+    </div>
+  <footer class="text-center">
+    <div class="footer-style pt-3">
+      <p>Artworks<sup>&copy;</sup> was created by Adeniji Adefisayo, 2020.</p>
+      <small>All right reserved</small>
+    </div>
+  </footer>
+  </div>
+  <script src="/signup.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+</body>
+</html>

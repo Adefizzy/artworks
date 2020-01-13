@@ -1,4 +1,5 @@
 import debug from 'debug';
+import mongoose from 'mongoose';
 
 
 class Posts {
@@ -73,10 +74,11 @@ class Posts {
     return async (req, res) => {
       try {
         const posts = await PostModel.find({});
+        // debug('app:homepage')(posts);
         let counter = 0;
         while (counter < posts.length) {
           const author = await UserModel.findById(posts[counter].authorId);
-          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version || ''}/${posts[counter].images[0].public_id || ''}.${posts[counter].images[0].format || ''}`;
+          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version}/${posts[counter].images[0].public_id}.${posts[counter].images[0].format}`;
           posts[counter].author = author.name;
           posts[counter].image = img;
           counter += 1;
@@ -86,6 +88,8 @@ class Posts {
         res.render(view, {
           posts,
           username: req.username || '',
+          // eslint-disable-next-line
+          isArtist: req.user? req.user.isArtist : '',
         });
       } catch (error) {
         debug('app:frontpage')(error);
@@ -97,6 +101,7 @@ class Posts {
     return async (req, res) => {
       try {
         const { id } = req.params;
+        debug('app:singlePost')(mongoose.Types.ObjectId.isValid(id));
         const post = await PostModel.findById(id);
         const artist = await UserModel.findById(post.authorId);
         const img = post.images.map((image) => `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_0.2,c_limit,q_auto/v${image.version}/${image.public_id}.${image.format}`);
@@ -107,9 +112,11 @@ class Posts {
         artistInfo.whatsapp = artist.whatsapp;
         artistInfo.phone = artist.phone;
         post.artist = artistInfo;
+        debug('app:post')(post);
         res.render(view, {
           post,
           username: req.username,
+          isArtist: req.user.isArtist,
         });
       } catch (error) {
         debug('app:error')(error);
@@ -131,15 +138,75 @@ class Posts {
         debug('app:putpost')(req.body);
 
         await PostModel.findByIdAndUpdate(req.params.id, req.body);
-        // Object.entries(req.body).forEach((data) => {
-        //   const [key, value] = data;
-        //   oldPost[key] = value;
-        // });
-        // const newPost = await oldPost.save();
         res.redirect(`/auth/postpreview/${req.params.id}`);
       } catch (error) {
         req.flash('error', 'an error occurred, kindly retry');
         res.redirect('back');
+      }
+    };
+  }
+
+  static getEditPost(PostModel) {
+    return (req, res) => {
+      PostModel.findById(req.params.id, (err, post) => {
+        if (err) {
+          req.flash('error', 'Error, please reload');
+          res.redirect('back');
+        }
+        res.render('editPost', {
+          username: req.username,
+          post,
+          error: req.flash('error')[0],
+        });
+      });
+    };
+  }
+
+  static getPostForm() {
+    return (req, res) => {
+      res.render('postArt', {
+        error: req.flash('error')[0],
+      });
+    };
+  }
+
+  static getPosts(UserModel, PostModel) {
+    return async (req, res) => {
+      try {
+        const posts = await PostModel.find({ authorId: req.user._id });
+        let counter = 0;
+        while (counter < posts.length) {
+          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version}/${posts[counter].images[0].public_id}.${posts[counter].images[0].format}`;
+          posts[counter].image = img;
+          counter += 1;
+        }
+        debug('app:posts')(posts);
+        res.render('posts', {
+          posts,
+          username: req.username,
+          artist: req.user.name,
+          success: req.flash('success')[0],
+          error: req.flash('error')[0],
+        });
+      } catch (error) {
+        req.flash('error', 'error occured');
+      }
+    };
+  }
+
+  static deletePosts(PostModel, cloudinary) {
+    return async (req, res) => {
+      try {
+        const { id } = req.params;
+        const post = await PostModel.findById(id);
+        const { images } = post;
+        await Posts.destroyImages(images, cloudinary);
+        await PostModel.findByIdAndDelete(id);
+        req.flash('success', 'post has been deleted');
+        res.redirect('/auth/posts');
+      } catch (error) {
+        req.flash('error', 'Please try again');
+        res.redirect('/auth/posts');
       }
     };
   }

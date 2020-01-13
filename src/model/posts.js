@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-mongoose.set('useCreateIndex', true);
+// mongoose.set('useCreateIndex', true);
+// mongoose.set('useFindAndModify', false);
 
 const { Schema } = mongoose;
 

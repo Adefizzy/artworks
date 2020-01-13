@@ -14,10 +14,8 @@ form.addEventListener('submit', (e) => {
     alert.innerHTML = 'Images must not be more than 3';
     return;
   }
-console.log(postImage.files.length);
-console.log('postImage.files.length');
+
   if (postImage.files.length < 1) {
-    console.log('less than 1')
     e.preventDefault();
     alert.classList.replace('alert-primary', 'alert-danger');
     alert.style.display = 'block';
@@ -37,11 +35,12 @@ fileInput.addEventListener('change', () => {
 });
 
 price.addEventListener('change', (e) => {
+  const regex = /^\d+$/;
   // eslint-disable-next-line
-  if (isNaN(parseFloat(price.value))) {
+  if (isNaN(parseFloat(price.value)) || !regex.test(price.value)) {
     e.target.value = '';
     price.style.borderColor = 'red';
-    warning.innerHTML = 'Price must be number';
+    warning.innerHTML = 'Price must be number only';
     warning.style.color = 'red';
     return;
   }

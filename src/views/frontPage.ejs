@@ -35,6 +35,7 @@
                   favourites
                 </a>
             </div>
+            <% if(isArtist){%>
             <div class="col-12 mt-3">
               <a href="/auth/posts" class=""  >
                 <i class="fa fa-book pr-2" aria-hidden="true" ></i>
@@ -47,12 +48,7 @@
                 Post Ad
               </a>
             </div>
-            <!-- <div class="col-12 mt-3">
-              <a href="#" class=""  >
-                <i class="fa fa-adjust pr-2" aria-hidden="true" ></i>
-                Edit Post
-              </a>
-            </div> -->
+          <%}%>
             <div class="col-12 mt-3">
                 <a href="#" class=""  >
                   <i class="fa fa-cog pr-2" aria-hidden="true" ></i>
@@ -71,8 +67,8 @@
         </div>
       </div>
     </aside>
-    <div class="container-fluid">
-      <div class="row">
+    <main class="container">
+      <header class="row">
         <div class="col-12 pl-4" id="filter">
           <p class=" pt-2">
             filter
@@ -111,38 +107,47 @@
                   </div>
             </div>
             <div class=" col-sm-12 col-md-2" id="search-button-div">
-            <button id="" type="submit" class="button btn btn-primary closeSeachForm w-100">Search</button>
+            <button id="" type="submit" class="button btn  closeSeachForm w-100">Search</button>
            </div>
           </div>
         </form>
-      </div>
+      </header>
       <div  class=" d-flex flex-column justify-content-between h-100 mt-3">
         <main class="art-container ">
          <%posts.forEach(post => {%>
             <section class="art-card ">
             <header class="art-header" id="img1">
               <a href="/auth/artpreview/<%=post._id%>"><img
-                src=<%=post.image%>
+                src="<%=post.image%>"
                 class="art-image"
-                alt=<%=post.title%>
+                alt="<%=post.title%>"
               /></a>
             </header>
             <footer class="art-footer">
-              <p class="art-name"><%=post.title%></p>
-              <p class="art-artist text-muted"><%=post.artist%></p>
-              <p class=" d-flex justify-content-between pr-3">
-                  <span class="text-primary"><%=post.price%></span>
-                  <a href="#"><i  class=" icon fa fa-heart-o" ></i></a>
-              </p>
+              <div class=" d-flex justify-content-between">
+                <%if(post.title.length > 11){
+                  post.title = post.title.slice(0, 10);
+                  %>
+                <small class="art-name"><%=post.title%>. . .</small>
+                <%}else{%>
+                  <small class="art-name"><%=post.title%></small>
+                  <%}%>
+                <small class="pr-2"><i  class=" icon fa fa-heart-o"></i></small>
+              </div>
+              <small class="art-artist text-muted"><%=post.author%></small>
+              <p class="text-primary"><%=post.price%></p>
             </footer>
           </section>
          <%})%>
         </main>
-        <footer class="row bg-dark">
-          <h1>Hello word</h1>
-        </footer>
       </div>
-    </div>
+    </main>
+    <footer class="text-center mt-5">
+          <div class="footer-style pt-3">
+            <p>Artworks<sup>&copy;</sup> was created by Adeniji Adefisayo, 2020.</p>
+            <small>All right reserved</small>
+          </div>
+    </footer>
     <script src="/favouriteIcon.js"></script>
     <script src="/sideBar.js"></script>
     <script src="/main.js"></script>

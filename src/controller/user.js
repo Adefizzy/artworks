@@ -1,3 +1,4 @@
+import debug from 'debug';
 
 class UserController {
   static createUser(Users) {
@@ -20,8 +21,20 @@ class UserController {
 
       user.save((err, artuser) => {
         if (err) {
-          req.flash('message', 'server error, please try again');
-          res.redirect('/signup');
+          Users.find({ username: req.body.username }, (error, existingUser) => {
+            debug('app:findUser')(existingUser);
+            if (error) {
+              req.flash('message', 'server error, please try again');
+              return res.redirect('/signup');
+            }
+
+            if (existingUser.length !== 0) {
+              req.flash('message', 'Email already exist');
+              return res.redirect('/signup');
+            }
+            req.flash('message', 'server error, please try again');
+            return res.redirect('/signup');
+          });
         } else if (artuser === undefined) {
           req.flash('message', 'email already exist');
           res.redirect('/signup');

@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+  <meta name="theme-color" content="#55a01c" />
+  <meta name="msapplication-navbutton-color" content="#55a01c" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#55a01c" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="d-flex justify-content-between flex-column h-100">
+    <nav class="navbar navbar-light">
+      <div class="d-flex justify-content-between container">
+        <a class="navbar-brand" href="/auth/frontpage">ArtWorks</a>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/signup">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <main class="row">
+        <form
+          class="col-11 col-md-6 col-lg-4 mx-auto"
+          id="signin-form"
+          action = "/signin"
+          method="POST"
+        >
+          <header class="row">
+            <div class="col-sm-12 text-center">
+              <h4>Sign In</h4>
+              <% if (message !== undefined ) {%>
+                <div class="alert alert-danger col-8 mx-auto" role="alert">
+                 <p class="mb-0"><%=message%></p>
+                </div>
+              <%}%>
+            </div>
+          </header>
+          <div class="form-row">
+            <div class=" form-group col-sm-12">
+              <input
+                name="username"
+                type="email"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-sm-12">
+              <input
+                name="password"
+                type="password"
+                class="form-control"
+                id="inputPassword3"
+                placeholder="Password"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-sm-12">
+              <button
+                id=""
+                type="submit"
+                class="button btn w-50"
+              >
+                Sign in
+              </button>
+            </div>
+          </div>
+          <ul class="col-12 justify-content-between d-flex nav flex-nowrap pt-4">
+            <li class="nav-item">
+              <a class="nav-link" href="/forgotpassword"><small>forgot password?</small></a>
+            </li>
+          </ul>
+        </form>
+      </main>
+  </div>
+  <footer class="text-center">
+    <div class="footer-style pt-3">
+      <p>Artworks<sup>&copy;</sup> was created by Adeniji Adefisayo, 2020.</p>
+      <small>All right reserved</small>
+    </div>
+  </footer>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</body>
+</html>
