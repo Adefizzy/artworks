@@ -13,15 +13,17 @@ import flash from 'connect-flash';
 import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
 
+const ejs = require("ejs").__express;
+
+import database from './config/database';
+import authenticateUser from './config/passport';
+
 import home from './routes/home';
 import authRoutes from './routes/authRoutes';
 
 import users from './model/users';
 import postModel from './model/posts';
 import messageModel from './model/message';
-
-import database from './config/database';
-import authenticateUser from './config/passport';
 
 database();
 
@@ -56,10 +58,9 @@ authenticateUser(app, users, passport, Strategy);
 app.use(express.static('public'));
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
+app.engine('.ejs', ejs);
 
 app.use('/', home(passport, users, postModel));
 app.use('/auth/', authRoutes(users, postModel, messageModel));
-
-
 
 app.listen(PORT, debug('app:')(chalk.red(`Server running on port ${PORT}`)));
