@@ -47,17 +47,17 @@
     "passport-local": "^1.0.0",
     "redis": "^2.8.0",
     "sass-loader": "^8.0.1",
-    "style-loader": "^1.1.2"
+    "style-loader": "^1.1.2",
+    "bull": "^3.12.1",
+    "throng": "^4.0.0",
+    "copy-webpack-plugin": "^5.1.1"
   },
   "devDependencies": {
     "babel-loader": "^8.0.6",
-    "bull": "^3.12.1",
-    "copy-webpack-plugin": "^5.1.1",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "html-webpack-plugin": "^3.2.0",
-    "throng": "^4.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",

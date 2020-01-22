@@ -13,6 +13,7 @@ function authRoutes(UserModel, PostModel, MessageModel) {
   Router.route('/frontpage').get(Posts.populatePage(UserModel, PostModel, 'frontPage'));
   Router.route('/artpreview/:id').get(Posts.getSinglePost(UserModel, PostModel, 'artPreview'));
   Router.route('/request/:id').get(Message.artRequest(PostModel, MessageModel));
+  // Router.route('/job').get(Posts.backgroundJob(PostModel));
   Router.use(Authorization.isArtist());
   Router.route('/postpreview/:id').get(Posts.getSinglePost(UserModel, PostModel, 'postPreview'));
   Router.route('/editpost/:id')
