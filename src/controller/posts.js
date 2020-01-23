@@ -121,7 +121,21 @@ class Posts {
     });
   }
 
-  static populatePage(UserModel, PostModel, view) {
+  static useWorker(UserModel, PostModel) {
+    return async (req, res, next) => {
+      try {
+        Posts.posts = await PostModel.find({});
+        Posts.returnedData = [];
+        await Posts.worker(UserModel);
+        req.returnedData = Posts.returnedData;
+        next();
+      } catch (error) {
+        debug('app:error')(error);
+      }
+    };
+  }
+
+  static populatePage(view) {
     return async (req, res) => {
       // try {
       //   const posts = await PostModel.find({});
@@ -146,20 +160,13 @@ class Posts {
       //   debug('app:frontpage')(error);
       // }
 
-      try {
-        Posts.posts = await PostModel.find({});
-        Posts.returnedData = [];
-        await Posts.worker(UserModel);
-        debug('app:finally')(Posts.returnedData);
-        res.render(view, {
-          posts: Posts.returnedData,
-          username: req.username || '',
-          // eslint-disable-next-line
-          isArtist: req.user? req.user.isArtist : '',
-        });
-      } catch (error) {
-        debug('app:error')(error);
-      }
+
+      res.render(view, {
+        posts: req.returnedData,
+        username: req.username || '',
+        // eslint-disable-next-line
+        isArtist: req.user? req.user.isArtist : '',
+      });
     };
   }
 

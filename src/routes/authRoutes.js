@@ -10,7 +10,7 @@ const Router = express.Router();
 
 function authRoutes(UserModel, PostModel, MessageModel) {
   Router.use(isLoggedIn.loggedIn());
-  Router.route('/frontpage').get(Posts.populatePage(UserModel, PostModel, 'frontPage'));
+  Router.route('/frontpage').get(Posts.useWorker(UserModel, PostModel), Posts.populatePage('frontPage'));
   Router.route('/artpreview/:id').get(Posts.getSinglePost(UserModel, PostModel, 'artPreview'));
   Router.route('/request/:id').get(Message.artRequest(PostModel, MessageModel));
   // Router.route('/job').get(Posts.backgroundJob(PostModel));
