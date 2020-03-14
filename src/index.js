@@ -13,8 +13,7 @@ import flash from 'connect-flash';
 import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
 import ejs from 'ejs';
-// import redis from 'redis';
-// import redisConnect from 'connect-redis';
+
 
 import database from './config/database';
 import authenticateUser from './config/passport';
@@ -36,8 +35,7 @@ const app = express();
 const PORT = process.env.PORT || 6868;
 
 const MongoStore = connectMongo(session);
-// const RedisStore = redisConnect(session);
-// const client = redis.createClient();
+
 
 app.use(cors());
 app.use(express.json());
@@ -51,7 +49,7 @@ app.use(session({
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
   }),
-  // store: new RedisStore({ client }),
+
 }));
 
 app.use(methodOverride('_method'));
@@ -64,6 +62,18 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 app.engine('.ejs', ejs.__express);
 
+/* const Router = express.Router();
+
+
+const test = () => {
+  Router.route('/test').get((req, res) => {
+    res.send('Hello World');
+  });
+
+  return Router;
+}
+
+app.use('/', test()); */
 app.use('/', home(passport, users, postModel));
 app.use('/auth/', authRoutes(users, postModel, messageModel));
 

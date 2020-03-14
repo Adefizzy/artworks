@@ -7,7 +7,7 @@ import PostController from '../controller/posts';
 const Router = express.Router();
 
 function home(passport, Users, PostModel) {
-  Router.route('/').get(PostController.useWorker(Users, PostModel), PostController.populatePage('index'));
+  Router.route('/').get(PostController.populatePage(PostModel, Users, 'index'));
 
   Router.route('/signin').get((req, res) => {
     res.render('login', {

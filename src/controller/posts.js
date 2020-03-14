@@ -1,4 +1,5 @@
 import debug from 'debug';
+import { promiseImpl } from 'ejs';
 // import Queue from 'bull';
 // import util from 'util';
 // import redis from 'redis';
@@ -98,7 +99,7 @@ class Posts {
     return refinedData;
   }
 
-  static async worker(UserModel) {
+ /*  static async worker(UserModel) {
     debug('app:posts')(Posts.posts);
     return new Promise((resolve, reject) => {
       (async () => {
@@ -119,9 +120,9 @@ class Posts {
         }
       })();
     });
-  }
+  } */
 
-  static useWorker(UserModel, PostModel) {
+  /* static useWorker(UserModel, PostModel) {
     return async (req, res, next) => {
       try {
         Posts.posts = await PostModel.find({});
@@ -133,40 +134,57 @@ class Posts {
         debug('app:error')(error);
       }
     };
+  } */
+
+  static useMap(posts){
+    return posts.map(async post => {
+      post.author = await UserModel.findById(post.authorId);
+      post.image = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
+      return post;
+    })
   }
 
-  static populatePage(view) {
+  static populatePage(PostModel, UserModel, view) {
     return async (req, res) => {
-      // try {
-      //   const posts = await PostModel.find({});
-      //   debug('app:homepage')(posts);
-      //   let counter = 0;
-      //   while (counter < posts.length) {
-      //     const author = await UserModel.findById(posts[counter].authorId);
-      //     const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version}/${posts[counter].images[0].public_id}.${posts[counter].images[0].format}`;
-      //     posts[counter].author = author.name;
-      //     posts[counter].image = img;
-      //     counter += 1;
-      //   }
-      //   debug('app:homepage')(posts);
+      try {
+        const rawPosts = await PostModel.find({});
+       
+       /*  let counter = 0;
+        while (counter < posts.length) {
+          const author = await UserModel.findById(posts[counter].authorId);
+          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version}/${posts[counter].images[0].public_id}.${posts[counter].images[0].format}`;
+          posts[counter].author = author.name;
+          posts[counter].image = img;
+          counter += 1;
+        } */
+        debug('app:homepage')('Im here')
+        const updatedPost = rawPosts.map(async post => {
+          const author = await UserModel.findById(post.authorId);
+          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
+          post.image = img;
+          post.author = author.name;
+          return post;
+        })
+        
+        const posts = await Promise.all(updatedPost);
+        debug('app:homepage')(posts);
+        res.render(view, {
+          posts,
+          username: req.username || '',
+          // eslint-disable-next-line
+          isArtist: req.user? req.user.isArtist : '',
+        });
+      } catch (error) {
+        debug('app:frontpage')(error);
+      }
 
-      //   res.render(view, {
-      //     posts,
-      //     username: req.username || '',
-      //     // eslint-disable-next-line
-      //     isArtist: req.user? req.user.isArtist : '',
-      //   });
-      // } catch (error) {
-      //   debug('app:frontpage')(error);
-      // }
 
-
-      res.render(view, {
+     /*  res.render(view, {
         posts: req.returnedData,
         username: req.username || '',
         // eslint-disable-next-line
         isArtist: req.user? req.user.isArtist : '',
-      });
+      }); */
     };
   }
 
