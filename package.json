@@ -19,12 +19,14 @@
     "@babel/register": "^7.6.0",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "bull": "^3.12.1",
     "chalk": "^2.4.2",
     "cloudinary": "^1.18.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "connect-redis": "^4.0.3",
     "cookie-parser": "^1.4.4",
+    "copy-webpack-plugin": "^5.1.1",
     "cors": "^2.8.5",
     "css-loader": "^3.4.2",
     "debug": "^4.1.1",
@@ -48,9 +50,7 @@
     "redis": "^2.8.0",
     "sass-loader": "^8.0.1",
     "style-loader": "^1.1.2",
-    "bull": "^3.12.1",
-    "throng": "^4.0.0",
-    "copy-webpack-plugin": "^5.1.1"
+    "throng": "^4.0.0"
   },
   "devDependencies": {
     "babel-loader": "^8.0.6",

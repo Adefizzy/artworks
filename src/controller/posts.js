@@ -1,5 +1,6 @@
 import debug from 'debug';
 import { promiseImpl } from 'ejs';
+import { raw } from 'express';
 // import Queue from 'bull';
 // import util from 'util';
 // import redis from 'redis';
@@ -13,53 +14,32 @@ import { promiseImpl } from 'ejs';
 
 class Posts {
   static uploadImages(files, cloudinary) {
-    return new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          const refinedImage = [];
-          let i = 0;
-          while (i < files.length) {
+          const refinedImage = files.map(async file => {
             const tempImg = {};
-            const postedImage = await cloudinary.uploader.upload(files[i].path);
+            const postedImage = await cloudinary.uploader.upload(file.path);
             tempImg.public_id = postedImage.public_id;
             tempImg.version = postedImage.version;
             tempImg.width = postedImage.width;
             tempImg.heigth = postedImage.height;
             tempImg.created_at = postedImage.created_at;
             tempImg.format = postedImage.format;
-            refinedImage.push(tempImg);
-            i += 1;
-          }
-          resolve(refinedImage);
-        } catch (error) {
-          reject(error);
-        }
-      })();
-    });
+            return tempImg;
+          }) 
+          
+        return refinedImage;
   }
 
   static destroyImages(images, cloudinary) {
-    return new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          let i = 0;
-          while (i < images.length) {
-            await cloudinary.uploader.destroy(images[i].public_id);
-            i += 1;
-          }
-          resolve();
-        } catch (error) {
-          reject(error);
-        }
-      })();
-    });
+     return images.map( async image =>{
+      await cloudinary.uploader.destroy(image.public_id);
+     });
   }
 
   static addPost(cloudinary, PostModel) {
     return async (req, res) => {
       try {
         req.body.post.author = req.user._id;
-        const postedImages = await Posts.uploadImages(req.files, cloudinary);
+        const postedImages = await Promise.all(Posts.uploadImages(req.files, cloudinary));
         req.body.post.img = postedImages;
 
         const postedAd = new PostModel({
@@ -136,12 +116,15 @@ class Posts {
     };
   } */
 
-  static useMap(rawPosts,UserModel, cb){
+  static useMap(rawPosts, cb, UserModel = null){
     const updatedPost = rawPosts.map(async post => {
-      const author = await UserModel.findById(post.authorId);
+    let author;
+    if(UserModel !== null){
+      author = await UserModel.findById(post.authorId);
+      post.author = author.name;
+    }
       const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
       post.image = img;
-      post.author = author.name;
       return post;
     })
     cb(updatedPost);
@@ -151,25 +134,8 @@ class Posts {
     return async (req, res) => {
       try {
         const rawPosts = await PostModel.find({});
-       
-       /*  let counter = 0;
-        while (counter < posts.length) {
-          const author = await UserModel.findById(posts[counter].authorId);
-          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version}/${posts[counter].images[0].public_id}.${posts[counter].images[0].format}`;
-          posts[counter].author = author.name;
-          posts[counter].image = img;
-          counter += 1;
-        } */
-        /* debug('app:homepage')('Im here')
-        const updatedPost = rawPosts.map(async post => {
-          const author = await UserModel.findById(post.authorId);
-          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
-          post.image = img;
-          post.author = author.name;
-          return post;
-        }) */
 
-        Posts.useMap(rawPosts,UserModel, async (data) => {
+        Posts.useMap(rawPosts, async (data) => {
           const posts = await Promise.all(data);
           res.render(view, {
             posts,
@@ -177,27 +143,11 @@ class Posts {
             // eslint-disable-next-line
             isArtist: req.user? req.user.isArtist : '',
           });
-        });
+        },UserModel);
         
-        /* const posts = await Promise.all(updatedPost);
-        debug('app:homepage')(posts);
-        res.render(view, {
-          posts,
-          username: req.username || '',
-          // eslint-disable-next-line
-          isArtist: req.user? req.user.isArtist : '',
-        }); */
       } catch (error) {
         debug('app:frontpage')(error);
       }
-
-
-     /*  res.render(view, {
-        posts: req.returnedData,
-        username: req.username || '',
-        // eslint-disable-next-line
-        isArtist: req.user? req.user.isArtist : '',
-      }); */
     };
   }
 
@@ -234,8 +184,8 @@ class Posts {
         const oldPost = await PostModel.findById(req.params.id);
         if (req.files.length > 0) {
           const { images } = oldPost;
-          await Posts.destroyImages(images, cloudinary);
-          const postedImages = await Posts.uploadImages(req.files, cloudinary);
+          await Promise.all(Posts.destroyImages(images, cloudinary));
+          const postedImages = await Promise.all(Posts.uploadImages(req.files, cloudinary));
           req.body.images = postedImages;
         }
 
@@ -277,21 +227,19 @@ class Posts {
   static getPosts(UserModel, PostModel) {
     return async (req, res) => {
       try {
-        const posts = await PostModel.find({ authorId: req.user._id });
-        let counter = 0;
-        while (counter < posts.length) {
-          const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${posts[counter].images[0].version}/${posts[counter].images[0].public_id}.${posts[counter].images[0].format}`;
-          posts[counter].image = img;
-          counter += 1;
-        }
-        debug('app:posts')(posts);
-        res.render('posts', {
-          posts,
-          username: req.username,
-          artist: req.user.name,
-          success: req.flash('success')[0],
-          error: req.flash('error')[0],
-        });
+        const rawPosts = await PostModel.find({ authorId: req.user._id });
+        Posts.useMap(rawPosts, async(data) => {
+          const posts = await Promise.all(data);
+          res.render('posts', {
+            posts,
+            username: req.username,
+            artist: req.user.name,
+            success: req.flash('success')[0],
+            error: req.flash('error')[0],
+          });
+        })
+        
+        
       } catch (error) {
         req.flash('error', 'error occured');
       }
@@ -304,7 +252,7 @@ class Posts {
         const { id } = req.params;
         const post = await PostModel.findById(id);
         const { images } = post;
-        await Posts.destroyImages(images, cloudinary);
+        await Promise.all(Posts.destroyImages(images, cloudinary));
         await PostModel.findByIdAndDelete(id);
         req.flash('success', 'post has been deleted');
         res.redirect('/auth/posts');
