@@ -136,12 +136,15 @@ class Posts {
     };
   } */
 
-  static useMap(posts){
-    return posts.map(async post => {
-      post.author = await UserModel.findById(post.authorId);
-      post.image = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
+  static useMap(rawPosts,UserModel, cb){
+    const updatedPost = rawPosts.map(async post => {
+      const author = await UserModel.findById(post.authorId);
+      const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
+      post.image = img;
+      post.author = author.name;
       return post;
     })
+    cb(updatedPost);
   }
 
   static populatePage(PostModel, UserModel, view) {
@@ -157,23 +160,33 @@ class Posts {
           posts[counter].image = img;
           counter += 1;
         } */
-        debug('app:homepage')('Im here')
+        /* debug('app:homepage')('Im here')
         const updatedPost = rawPosts.map(async post => {
           const author = await UserModel.findById(post.authorId);
           const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
           post.image = img;
           post.author = author.name;
           return post;
-        })
+        }) */
+
+        Posts.useMap(rawPosts,UserModel, async (data) => {
+          const posts = await Promise.all(data);
+          res.render(view, {
+            posts,
+            username: req.username || '',
+            // eslint-disable-next-line
+            isArtist: req.user? req.user.isArtist : '',
+          });
+        });
         
-        const posts = await Promise.all(updatedPost);
+        /* const posts = await Promise.all(updatedPost);
         debug('app:homepage')(posts);
         res.render(view, {
           posts,
           username: req.username || '',
           // eslint-disable-next-line
           isArtist: req.user? req.user.isArtist : '',
-        });
+        }); */
       } catch (error) {
         debug('app:frontpage')(error);
       }
