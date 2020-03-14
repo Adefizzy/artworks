@@ -22,6 +22,16 @@ form.addEventListener('submit', (e) => {
     alert.innerHTML = 'please select at least one image';
     return;
   }
+
+  for(file of fileInput.files){
+    if(file.size > 2097152){
+      e.preventDefault();
+      alert.classList.replace('alert-primary', 'alert-danger');
+      alert.style.display = 'block';
+      alert.innerHTML = 'image size is too big, must not be more than 2mb';
+      return;
+      }
+    } 
   alert.style.display = 'none';
 });
 

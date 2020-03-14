@@ -1,16 +1,5 @@
 import debug from 'debug';
-import { promiseImpl } from 'ejs';
-import { raw } from 'express';
-// import Queue from 'bull';
-// import util from 'util';
-// import redis from 'redis';
 
-// redis.createClient();
-
-// const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
-
-
-// const workQueue = new Queue('work', { redis: { port: 6379, host: '127.1.1.0' } });
 
 class Posts {
   static uploadImages(files, cloudinary) {
@@ -71,50 +60,13 @@ class Posts {
 
     // const author = await UserModel.findById(post.authorId);
     debug('app:modifyPost')('modifying..');
-    const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${data.images[0].version}/${data.images[0].public_id}.${data.images[0].format}`;
+    const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_29/v${data.images[0].version}/${data.images[0].public_id}.${data.images[0].format}`;
     // eslint-disable-next-line
     refinedData.author = username;
     // eslint-disable-next-line
     refinedData.image = img;
     return refinedData;
   }
-
- /*  static async worker(UserModel) {
-    debug('app:posts')(Posts.posts);
-    return new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          if (Posts.posts.length === 0) {
-            return;
-          }
-          // eslint-disable-next-line
-        let subPost = Posts.posts.splice(0, 1);
-          const username = await UserModel.findById(subPost[0].authorId);
-          debug('app:username')(subPost[0].authorId);
-          Posts.returnedData.push(Posts.modifyPost(subPost, username.name));
-          resolve();
-          debug('app:resolved')('resolved');
-          setImmediate(Posts.worker);
-        } catch (error) {
-          reject(error);
-        }
-      })();
-    });
-  } */
-
-  /* static useWorker(UserModel, PostModel) {
-    return async (req, res, next) => {
-      try {
-        Posts.posts = await PostModel.find({});
-        Posts.returnedData = [];
-        await Posts.worker(UserModel);
-        req.returnedData = Posts.returnedData;
-        next();
-      } catch (error) {
-        debug('app:error')(error);
-      }
-    };
-  } */
 
   static useMap(rawPosts, cb, UserModel = null){
     const updatedPost = rawPosts.map(async post => {
@@ -123,7 +75,7 @@ class Posts {
       author = await UserModel.findById(post.authorId);
       post.author = author.name;
     }
-      const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_auto/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
+      const img = `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_200,c_limit,q_29/v${post.images[0].version}/${post.images[0].public_id}.${post.images[0].format}`;
       post.image = img;
       return post;
     })
@@ -158,7 +110,7 @@ class Posts {
         const { id } = req.params;
         const post = await PostModel.findById(id);
         const artist = await UserModel.findById(post.authorId);
-        const img = post.images.map((image) => `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_0.2,c_limit,q_auto/v${image.version}/${image.public_id}.${image.format}`);
+        const img = post.images.map((image) => `https://res.cloudinary.com/adefizzy/image/upload/w_0.2,h_0.2,c_limit,q_29/v${image.version}/${image.public_id}.${image.format}`);
         post.images = img;
         const artistInfo = {};
         artistInfo.name = artist.name;
